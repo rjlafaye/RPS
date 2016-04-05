@@ -1,0 +1,129 @@
+package rockpaperscissors;
+
+/**
+ * Created by Ryan on 3/31/2016.
+ */
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+import java.util.Scanner;
+import java.util.Random;
+
+public class RPSadvanced {
+    public static void main(String[] args) throws java.lang.Exception {
+        Scanner player = new Scanner(System.in );
+        Random rando = new Random(); //used to select random # for cpu
+        int input; // used for user input
+        int B = 1;
+        System.out.println("Welcome");
+        System.out.println("Pick 1, 2, or 3 for : ROCK (1), PAPER(2), or SCISSORS (3)");
+
+        // to keep track of your wins and losses
+        int wins = 0;
+        int losses = 0;
+        int ties = 0;
+
+        String TheirPreviousMove = "TheirPreviousMove";
+        String IpreviousWin = "previousWinOrLoss";
+        while (B != 0) {
+            //user chooses rock paper scissors by number
+            int Rock = 1;
+            int Paper = 2;
+            int Scissor = 3;
+
+
+            //the next # that the user inputs will be stored in input
+            input = player.nextInt();
+            //chooses number from 0 to 2, and adds one. assigns it to int variable
+            int randomNumber = rando.nextInt(3) + 1;
+            //if cpu wins, loser might assume that you are going to repeat your choice So they will switch to the selection that wasn’t beaten.
+            // In response, winners should play what the loser just played when they lost to have the best chance of beating them.
+            if (IpreviousWin == "won"){
+                if (TheirPreviousMove == "Rock"){
+                    randomNumber = 1;
+                }
+                if (TheirPreviousMove == "Paper"){
+                    randomNumber = 2;
+                }
+                if (TheirPreviousMove == "Scissor"){
+                    randomNumber = 3;
+                }
+            }
+            //if cpu looses, winner is likely to repeat. so switch to the unplayed option.
+            else if (IpreviousWin == "lost"){
+                if (TheirPreviousMove == "Rock"){
+                    randomNumber = 2;
+                }
+                if (TheirPreviousMove == "Paper"){
+                    randomNumber = 3;
+                }
+                if (TheirPreviousMove == "Scissor"){
+                    randomNumber = 1;
+                }
+            }
+            else {
+                randomNumber = rando.nextInt(3) + 1;
+            }
+
+            if (randomNumber == Rock) {
+                if (input == Rock) {
+                    System.out.println("Rock Vs. Rock: TIE");
+                    ties++;
+                    TheirPreviousMove = "Rock";
+                    IpreviousWin = "tie";
+                } else if (input == Paper) {
+                    System.out.println("Paper Vs. Rock: YOU WIN");
+                    wins++;
+                    TheirPreviousMove = "Paper";
+                    IpreviousWin = "lost";
+                } else if (input == Scissor) {
+                    System.out.println("Scissor Vs. Rock: YOU LOSE");
+                    losses++;
+                    TheirPreviousMove = "Scissor";
+                    IpreviousWin = "won";
+                }
+            } else if (randomNumber == Paper) {
+                if (input == Rock) {
+                    System.out.println("Rock Vs. Paper: YOU LOSE");
+                    losses++;
+                    TheirPreviousMove = "Rock";
+                    IpreviousWin = "won";
+                } else if (input == Paper) {
+                    System.out.println("Paper Vs. Paper: TIE");
+                    ties++;
+                    TheirPreviousMove = "Paper";
+                    IpreviousWin = "tie";
+                } else if (input == Scissor) {
+                    System.out.println("Scissor Vs. Paper: YOU WIN");
+                    wins++;
+                    TheirPreviousMove = "Scissor";
+                    IpreviousWin = "lost";
+                }
+
+            } else if (randomNumber == Scissor) {
+                if (input == Rock) {
+                    System.out.println("Rock Vs. Scissor: YOU WIN");
+                    wins++;
+                    TheirPreviousMove = "Rock";
+                    IpreviousWin = "lost";
+                } else if (input == Paper) {
+                    System.out.println("Paper Vs. Scissor: YOU LOSE");
+                    losses++;
+                    TheirPreviousMove = "Paper";
+                    IpreviousWin = "won";
+                } else if (input == Scissor) {
+                    System.out.println("Scissor Vs. Scissor: TIE");
+                    ties++;
+                    TheirPreviousMove = "Scissor";
+                    IpreviousWin = "tie";
+                }
+            }
+            System.out.println("wins: "+wins);
+            System.out.println("losses: "+losses);
+            System.out.println("ties: "+ties);
+
+
+        }
+    }
+
+}
